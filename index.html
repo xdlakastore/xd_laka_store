@@ -6,22 +6,112 @@
 <title>xd Laka Store</title>
 
 <style>
-body{margin:0;background:#090912;color:#fff;font-family:Arial,sans-serif}
-.wrap{max-width:760px;margin:auto;padding:16px}
-header{text-align:center;padding:25px;background:linear-gradient(135deg,#27124c,#090912)}
-h1{color:#b978ff;margin:0 0 8px}
-.card{background:#13131d;border:1px solid #332e45;border-radius:16px;padding:16px;margin:14px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.item img{width:100%;height:220px;object-fit:cover;border-radius:10px}
-.price{color:#67e6a1;font-size:22px;font-weight:bold;margin:10px 0}
-.badge{display:inline-block;background:#29233a;padding:6px 10px;border-radius:8px;margin:3px}
-.sold{background:#8b1e2d;color:#fff;padding:10px;border-radius:10px;text-align:center;font-weight:bold}
-button{border:0;border-radius:10px;padding:13px;color:#fff;font-weight:bold;width:100%;margin-top:10px}
-.buy{background:#20b95a}
-.wa{background:#20b95a}
-.qr{display:block;width:100%;max-width:300px;margin:15px auto;border-radius:12px}
-.small{color:#aaa}
-.hidden{display:none}
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:#090912;
+color:white;
+font-family:Arial,sans-serif
+}
+
+header{
+text-align:center;
+padding:28px 15px;
+background:linear-gradient(135deg,#35105f,#090912)
+}
+
+h1{
+color:#bd78ff;
+margin:0 0 8px;
+font-size:32px
+}
+
+.wrap{
+max-width:700px;
+margin:auto;
+padding:18px
+}
+
+.card{
+background:#14141f;
+border:1px solid #393149;
+border-radius:18px;
+padding:16px;
+margin-top:20px
+}
+
+.gallery{
+display:flex;
+overflow-x:auto;
+gap:10px;
+scroll-snap-type:x mandatory;
+border-radius:14px
+}
+
+.gallery img{
+width:100%;
+min-width:100%;
+height:330px;
+object-fit:cover;
+border-radius:14px;
+scroll-snap-align:start
+}
+
+.badge{
+display:inline-block;
+background:#29233b;
+padding:7px 10px;
+border-radius:8px;
+margin:12px 5px 5px 0;
+font-size:14px
+}
+
+h2{
+margin:12px 0 8px
+}
+
+.price{
+font-size:28px;
+font-weight:bold;
+color:#55e89b;
+margin:12px 0
+}
+
+.details{
+color:#ccc;
+line-height:1.7;
+font-size:16px
+}
+
+.buy,.wa{
+width:100%;
+border:0;
+padding:15px;
+border-radius:12px;
+font-size:17px;
+font-weight:bold;
+color:white;
+margin-top:12px;
+background:#20bd59
+}
+
+.hidden{
+display:none
+}
+
+.qr{
+display:block;
+width:240px;
+max-width:100%;
+margin:15px auto;
+border-radius:12px
+}
+
+.small{
+color:#aaa;
+font-size:13px
+}
 </style>
 </head>
 
@@ -29,178 +119,115 @@ button{border:0;border-radius:10px;padding:13px;color:#fff;font-weight:bold;widt
 
 <header>
 <h1>xd Laka Store</h1>
-<div>Free Fire ID Sell</div>
+<div>🔥 Free Fire ID Sell</div>
 </header>
 
 <div class="wrap">
 
-<h2>🔥 Available IDs</h2>
-<div id="list"></div>
+<div class="card">
 
-<section id="payment" class="card hidden">
+<!-- PHOTO GALLERY -->
+<div class="gallery">
 
-<h2>💳 Payment करें</h2>
-
-<div id="selected"></div>
-
-<img src="qr.png" class="qr" alt="Payment QR">
-
-<p><b>QR scan करके payment करें।</b></p>
-
-<p class="small">
-Payment के बाद WhatsApp पर screenshot भेजें।
-</p>
-
-<button id="whatsappBtn" class="wa">
-📲 WhatsApp पर Payment भेजें
-</button>
-
-</section>
+<img src="id1.jpeg">
+<img src="id2.jpeg">
+<img src="id3.jpeg">
+<img src="id4.jpeg">
+<img src="id5.jpeg">
+<img src="id6.jpeg">
+<img src="id7.jpeg">
 
 </div>
+
+<div class="badge">Post ID: 001</div>
+<div class="badge">Patch: Current</div>
+
+<h2>🔥 Free Fire ID</h2>
+
+<div class="price">₹699</div>
+
+<div class="details">
+
+<b>UID:</b> 52061<br>
+
+<b>Details:</b><br>
+• Full secure account<br>
+• Mail bind details as shown by seller<br>
+• Rare bundles<br>
+• Jujutsu Kaisen items<br>
+• Naruto items<br>
+• Multiple emotes<br>
+• Prime 4<br>
+• Rare gun skins<br>
+• Name Change Card<br>
+
+</div>
+
+<button class="buy" onclick="showPayment()">
+🛒 Buy Now
+</button>
+
+</div>
+
+
+<!-- PAYMENT -->
+<div id="payment" class="card hidden">
+
+<h2>💳 Payment</h2>
+
+<div class="price">₹699</div>
+
+<p>
+Is ID ke liye ₹699 payment karein.
+</p>
+
+<img src="qr.png" class="qr">
+
+<p class="small">
+QR scan karke payment karein. Payment ke baad
+screenshot WhatsApp par bhejein.
+</p>
+
+<button class="wa" onclick="openWhatsApp()">
+📲 WhatsApp Payment Screenshot
+</button>
+
+</div>
+
+</div>
+
 
 <script>
 
-const WHATSAPP_NUMBER="917978404391";
-
-/* =================================================
-   👇 सिर्फ इसी जगह अपनी IDs डालनी हैं
-   ================================================= */
-
-const posts=[
-
-{
-postId:"001",
-title:"Free Fire ID",
-patch:"OB52",
-price:"699",
-uid:"123456789",
-details:"Full secure hai, fake mail bind hai",
-image:""
-},
-},
-
-{
-postId:"002",
-photo:"",
-price:"150",
-uid:"987654321",
-details:"Rare skins, bundles and emotes",
-sold:false
-}
-
-/* नई ID ऐसे जोड़ना:
-,
-{
-postId:"003",
-photo:"",
-price:"500",
-uid:"111111111",
-details:"New account details",
-sold:false
-}
-*/
-
-];
-
-/* ================================================= */
-
-function esc(x){
-return String(x||"").replace(/[&<>"']/g,c=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[c]));
-}
-
-function render(){
-
-let html="";
-
-posts.forEach((p,i)=>{
-
-html+=`<div class="card item">`;
-
-if(p.photo){
-html+=`<img src="${esc(p.photo)}">`;
-}
-
-html+=`
-<div>
-<span class="badge">Post ID: ${esc(p.postId)}</span>
-</div>
-
-<h2>Free Fire ID</h2>
-
-<div class="price">₹${esc(p.price)}</div>
-
-<div>UID: ${esc(p.uid)}</div>
-
-<p class="small">${esc(p.details)}</p>
-`;
-
-if(p.sold){
-
-html+=`<div class="sold">🔴 SOLD OUT</div>`;
-
-}else{
-
-html+=`
-<button class="buy" onclick="buy(${i})">
-🛒 Buy Now
-</button>
-`;
-
-}
-
-html+=`</div>`;
-
-});
-
-document.getElementById("list").innerHTML=html;
-
-}
-
-function buy(i){
-
-let p=posts[i];
+function showPayment(){
 
 document.getElementById("payment").classList.remove("hidden");
 
-document.getElementById("selected").innerHTML=`
-<div class="badge">Post ID: ${esc(p.postId)}</div>
-<h2>Free Fire ID</h2>
-<div class="price">₹${esc(p.price)}</div>
-<div>UID: ${esc(p.uid)}</div>
-`;
-
-document.getElementById("whatsappBtn").onclick=function(){
-
-let msg=
-"Hello xd Laka Store 👋\n\n"+
-"Main Free Fire ID buy kar raha hoon.\n\n"+
-"Post ID: "+p.postId+"\n"+
-"UID: "+p.uid+"\n"+
-"Price: ₹"+p.price+"\n\n"+
-"Payment kar diya hai. Screenshot bhej raha hoon.\n"+
-"Please payment verify karke ID details bhej dijiye.";
-
-window.open(
-"https://wa.me/"+WHATSAPP_NUMBER+
-"?text="+encodeURIComponent(msg),
-"_blank"
-);
-
-};
-
 document.getElementById("payment")
-.scrollIntoView({behavior:"smooth"});
+.scrollIntoView({
+behavior:"smooth"
+});
 
 }
 
-render();
+function openWhatsApp(){
+
+const message =
+"Hello xd Laka Store 👋\n\n"+
+"Main Free Fire ID buy kar raha hoon.\n\n"+
+"Post ID: 001\n"+
+"UID: 52061\n"+
+"Price: ₹699\n\n"+
+"Payment kar diya hai. Payment screenshot bhej raha hoon.\n"+
+"Please payment verify karke purchased ID ke login details WhatsApp par bhej dijiye.";
+
+window.open(
+"https://wa.me/917978404391?text="+
+encodeURIComponent(message),
+"_blank"
+);
+
+}
 
 </script>
 
