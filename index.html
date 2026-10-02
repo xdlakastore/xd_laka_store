@@ -1,2 +1,307 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>xd Laka Store</title>
 
+<style>
+body{
+margin:0;
+background:#090912;
+color:#fff;
+font-family:Arial,sans-serif
+}
+.wrap{
+max-width:760px;
+margin:auto;
+padding:16px
+}
+header{
+text-align:center;
+padding:25px;
+background:linear-gradient(135deg,#27124c,#090912)
+}
+h1{
+color:#b978ff;
+margin:0 0 8px
+}
+.card{
+background:#13131d;
+border:1px solid #332e45;
+border-radius:16px;
+padding:16px;
+margin:14px 0
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:14px
+}
+.item img{
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:10px
+}
+.price{
+color:#67e6a1;
+font-size:21px;
+font-weight:bold;
+margin:8px 0
+}
+.badge{
+display:inline-block;
+background:#29233a;
+padding:5px 9px;
+border-radius:8px;
+font-size:13px;
+margin:3px 0
+}
+button{
+border:0;
+border-radius:10px;
+padding:12px 16px;
+font-weight:bold;
+color:#fff;
+cursor:pointer
+}
+.buy{
+background:#20b95a;
+width:100%;
+margin-top:10px
+}
+.wa{
+background:#20b95a;
+width:100%;
+margin-top:10px
+}
+.small{
+color:#aaa;
+font-size:13px
+}
+.qr{
+display:block;
+max-width:240px;
+width:100%;
+margin:12px auto;
+border-radius:12px
+}
+.hidden{
+display:none
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>xd Laka Store</h1>
+<div>Free Fire ID Sell</div>
+</header>
+
+<div class="wrap">
+
+<h2>🔥 Available IDs</h2>
+
+<div id="list" class="grid"></div>
+
+<section id="payment" class="card hidden">
+
+<h2>💳 Payment करें</h2>
+
+<div id="selected"></div>
+
+<img src="qr.png" class="qr" alt="Payment QR">
+
+<p><b>QR scan करके payment करें।</b></p>
+
+<p class="small">
+Payment करने के बाद नीचे WhatsApp button दबाएँ
+और payment screenshot भेजें।
+</p>
+
+<button id="whatsappBtn" class="wa">
+📲 WhatsApp पर Payment भेजें
+</button>
+
+</section>
+
+</div>
+
+<script>
+
+const WHATSAPP_NUMBER = "917978404391";
+
+
+/* 
+हर नई Free Fire ID यहाँ add कर सकते हो।
+*/
+
+const posts = [
+
+{
+postId:"001",
+title:"Free Fire ID",
+patch:"OB52",
+price:"100",
+uid:"123456789",
+details:"Rare bundle, skins and other details",
+image:""
+},
+
+{
+postId:"002",
+title:"Free Fire ID 2",
+patch:"OB53",
+price:"150",
+uid:"987654321",
+details:"Bundle / skin details",
+image:""
+}
+
+];
+
+
+function esc(s){
+
+return String(s == null ? "" : s).replace(/[&<>"']/g,function(c){
+
+return {
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+
+}[c];
+
+});
+
+}
+
+
+function render(){
+
+const list=document.getElementById("list");
+
+let out="";
+
+for(let i=0;i<posts.length;i++){
+
+const p=posts[i];
+
+out += '<article class="card item">';
+
+if(p.image){
+
+out += '<img src="'+esc(p.image)+'" alt="Free Fire ID">';
+
+}
+
+out += '<div class="badge">Post ID: '+esc(p.postId)+'</div>';
+
+out += '<div class="badge">Patch: '+esc(p.patch)+'</div>';
+
+out += '<h3>'+esc(p.title)+'</h3>';
+
+out += '<div class="price">₹'+esc(p.price)+'</div>';
+
+if(p.uid){
+
+out += '<div>UID: '+esc(p.uid)+'</div>';
+
+}
+
+out += '<p class="small">'+esc(p.details)+'</p>';
+
+out += '<button class="buy" data-index="'+i+'">🛒 Buy Now</button>';
+
+out += '</article>';
+
+}
+
+list.innerHTML=out;
+
+
+document.querySelectorAll(".buy").forEach(function(btn){
+
+btn.addEventListener("click",function(){
+
+buyPost(Number(btn.getAttribute("data-index")));
+
+});
+
+});
+
+}
+
+
+function buyPost(index){
+
+const p=posts[index];
+
+document.getElementById("payment").classList.remove("hidden");
+
+
+document.getElementById("selected").innerHTML=
+
+'<div class="badge">Post ID: '+esc(p.postId)+'</div>'+
+
+'<div class="badge">Patch: '+esc(p.patch)+'</div>'+
+
+'<h3>'+esc(p.title)+'</h3>'+
+
+'<div class="price">₹'+esc(p.price)+'</div>';
+
+
+document.getElementById("whatsappBtn").onclick=function(){
+
+const msg=
+
+"Hello xd Laka Store 👋\n\n"+
+
+"Main ye Free Fire ID buy kar raha hoon.\n\n"+
+
+"Post ID: "+p.postId+"\n"+
+
+"Title: "+p.title+"\n"+
+
+"Patch: "+p.patch+"\n"+
+
+"UID: "+(p.uid || "N/A")+"\n"+
+
+"Price: ₹"+p.price+"\n\n"+
+
+"Payment kar diya hai. Payment screenshot isi WhatsApp chat mein bhej raha hoon.\n\n"+
+
+"Please payment check karke meri purchased ID ka login/password bhej dijiye.";
+
+
+window.open(
+
+"https://wa.me/"+
+WHATSAPP_NUMBER+
+"?text="+
+encodeURIComponent(msg),
+
+"_blank"
+
+);
+
+};
+
+
+document.getElementById("payment")
+.scrollIntoView({behavior:"smooth"});
+
+}
+
+
+render();
+
+</script>
+
+</body>
+</html>
 
