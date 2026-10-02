@@ -49,12 +49,13 @@ scroll-snap-type:x mandatory;
 border-radius:14px
 }
 
-.gallery img{
-width:100%;
-min-width:100%;
-height:auto;
+.gallery{
+display:flex;
+overflow-x:auto;
+gap:10px;
+scroll-snap-type:x mandatory;
 border-radius:14px;
-scroll-snap-align:start
+align-items:flex-start;
 }
 
 .badge{
