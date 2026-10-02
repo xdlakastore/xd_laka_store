@@ -39,13 +39,15 @@ border:1px solid #393149;
 border-radius:18px;
 padding:16px;
 margin-top:
-.gallery{
-display:flex;
-overflow-x:auto;
-gap:10px;
-scroll-snap-type:x mandatory;
+.gallery img{
+flex:0 0 100%;
+width:100%;
+height:auto;
+max-width:100%;
+object-fit:contain;
 border-radius:14px;
-align-items:flex-start;
+scroll-snap-align:start;
+display:block;
 }
 
 .gallery img{
